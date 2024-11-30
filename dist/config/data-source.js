@@ -1,15 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppDataSource = void 0;
-require("reflect-metadata");
-const typeorm_1 = require("typeorm");
-exports.AppDataSource = new typeorm_1.DataSource({
+import { DataSource } from "typeorm";
+import { Cart } from "../entities/Cart.entity.js";
+import { Store } from "../entities/Store.entity.js";
+import { User } from "../entities/User.entity.js";
+export const AppDataSource = new DataSource({
     type: "mysql",
-    username: "root",
-    port: 3306,
     host: "localhost",
+    port: 3306,
+    username: "root",
+    password: "",
     database: "orm",
     synchronize: true,
     logging: true,
-    entities: ["src/entities/*.ts"],
+    entities: [User, Cart, Store],
 });

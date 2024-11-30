@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,25 +7,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Store = void 0;
-const typeorm_1 = require("typeorm");
-const Product_entity_1 = require("./Product.entity");
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "./Product.entity.js";
 let Store = class Store {
 };
-exports.Store = Store;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Store.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    Column(),
     __metadata("design:type", String)
 ], Store.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Product_entity_1.Product, product => product.store),
-    __metadata("design:type", Array)
+    OneToMany(() => Product, product => product.store),
+    __metadata("design:type", Object)
 ], Store.prototype, "products", void 0);
-exports.Store = Store = __decorate([
-    (0, typeorm_1.Entity)()
+Store = __decorate([
+    Entity()
 ], Store);
+export { Store };

@@ -1,40 +1,27 @@
-import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source";
-import { Product } from "../entities/Product.entity";
-import { User } from "../entities/User.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Cart } from "../entities/Cart.entity.js";
 
-export class UserController {
-  static async buyProduct(req: Request, res: Response) {
-    const { userId, productId, quantity } = req.body;
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    const userRepo = AppDataSource.getRepository(User);
-    const productRepo = AppDataSource.getRepository(Product);
+  @Column()
+  firstName!: string;
 
-    const user = await userRepo.findOne({
-      where: { id: userId },
-      relations: ["cart"],
-    });
+  @Column()
+  surname!: string;
 
-    const product = await productRepo.findOne({
-      where: {
-        id: productId,
-      },
-    });
+  @Column({ unique: true })
+  email!: string;
 
-    const sum = product!.price * quantity;
+  @Column()
+  age!: number;
 
-    if (user!.wallet < sum) return res.json(400).json({ msg: "Not enough money!" });
+  @Column("decimal", { precision: 10, scale: 2 })
+  wallet!: number;
 
-    user!.wallet -= sum;
-    product!.quantity -= quantity;
-
-    await userRepo.save(user!);
-    await productRepo.save(product!);
-
-    res.json({
-      message: "OK",
-      user,
-      product,
-    });
-  }
+  @OneToOne(() => Cart, cart => cart.user, { cascade: true })
+  @JoinColumn()
+  cart!: Relation<Cart>;
 }

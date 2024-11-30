@@ -1,17 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-const app_1 = require("./app");
-const data_source_1 = require("./config/data-source");
-data_source_1.AppDataSource.initialize()
+import { app } from "./app.js";
+import { AppDataSource } from "./config/data-source.js";
+AppDataSource.initialize()
     .then(() => {
-    console.log("Has been init");
-})
-    .then(() => {
-    app_1.app.listen(3000, () => {
-        console.log("There is a working server!");
+    console.log("Database has been initialized.");
+    app.listen(3000, () => {
+        console.log("Server is running on port 3000");
     });
 })
-    .catch(err => {
-    console.error(err);
+    .catch(error => {
+    console.error("Error during Data Source initialization:", error);
 });

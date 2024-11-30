@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Store } from "./Store.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Cart } from "./Cart.entity.js";
+import { Store } from "./Store.entity.js";
 
 @Entity()
 export class Product {
@@ -12,9 +13,9 @@ export class Product {
   @Column("decimal", { precision: 10, scale: 2 })
   price!: number;
 
-  @Column()
-  quantity!: number;
-
   @ManyToOne(() => Store, store => store.products)
-  store!: Store;
+  store!: Relation<Store>;
+
+  @ManyToOne(() => Cart, cart => cart.products, { nullable: true })
+  cart!: Relation<Cart>;
 }

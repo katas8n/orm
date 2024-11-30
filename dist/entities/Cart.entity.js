@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,21 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cart = void 0;
-const typeorm_1 = require("typeorm");
-const User_entity_1 = require("./User.entity");
+import { Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./User.entity.js";
 let Cart = class Cart {
 };
-exports.Cart = Cart;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Cart.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => User_entity_1.User, user => user.cart),
-    __metadata("design:type", User_entity_1.User)
+    OneToOne(() => User, user => user.cart),
+    __metadata("design:type", Object)
 ], Cart.prototype, "user", void 0);
-exports.Cart = Cart = __decorate([
-    (0, typeorm_1.Entity)()
+Cart = __decorate([
+    Entity()
 ], Cart);
+export { Cart };
