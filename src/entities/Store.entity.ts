@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Product } from "./Product.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Product } from "./Product.entity.js";
 
 @Entity()
 export class Store {
@@ -10,5 +10,5 @@ export class Store {
   name!: string;
 
   @OneToMany(() => Product, product => product.store)
-  products!: Product[];
+  products!: Relation<Product[]>;
 }

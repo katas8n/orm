@@ -1,5 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Cart } from "./Cart.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Cart } from "./Cart.entity.js";
 
 @Entity()
 export class User {
@@ -7,26 +7,20 @@ export class User {
   id!: number;
 
   @Column()
-  firstName!: string;
-
-  @Column()
-  surname!: string;
+  name!: string;
 
   @Column({
     unique: true,
   })
   email!: string;
 
-  @Column()
-  age!: number;
-
   @Column("decimal", {
     precision: 10,
     scale: 2,
   })
-  wallet!: number;
+  balance!: number;
 
   @OneToOne(() => Cart, cart => cart.user, { cascade: true })
   @JoinColumn()
-  cart!: Cart;
+  cart!: Relation<Cart>;
 }

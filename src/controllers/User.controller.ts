@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../config/data-source";
-import { Product } from "../entities/Product.entity";
-import { User } from "../entities/User.entity";
+import { AppDataSource } from "../config/data-source.js";
+import { Product } from "../entities/Product.entity.js";
+import { User } from "../entities/User.entity.js";
 
 export class UserController {
   static async buyProduct(req: Request, res: Response) {
@@ -23,9 +23,9 @@ export class UserController {
 
     const sum = product!.price * quantity;
 
-    if (user!.wallet < sum) return res.json(400).json({ msg: "Not enough money!" });
+    if (user!.balance < sum) return res.json(400).json({ msg: "Not enough money!" });
 
-    user!.wallet -= sum;
+    user!.balance -= sum;
     product!.quantity -= quantity;
 
     await userRepo.save(user!);
